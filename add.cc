@@ -20,6 +20,10 @@ int Add::run(uint8_t const* key, uint8_t const* iv)
 		hmac_sha256_init(&ctx, key, 32);
 		hmac_sha256_update(&ctx, mac, MAC_SIZE);
 		size_t bytes = fread(buffer, 1, BLOCK_SIZE, stdin);
+		if (ferror(stdin)) {
+			success = false;
+			break;
+		}
 		hmac_sha256_update(&ctx, buffer, bytes);
 		hmac_sha256_final(&ctx, mac, MAC_SIZE);
 		if (fwrite(buffer, 1, bytes, stdout) != bytes) {

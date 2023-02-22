@@ -20,6 +20,10 @@ int Verify::run(uint8_t const* key, uint8_t const* iv)
 		hmac_sha256_init(&ctx, key, 32);
 		hmac_sha256_update(&ctx, buffer + BLOCK_SIZE, MAC_SIZE);
 		size_t bytes = fread(buffer, 1, sizeof(buffer), stdin);
+		if (ferror(stdin)) {
+			success = false;
+			break;
+		}
 		if (bytes < MAC_SIZE) {
 			success = false;
 			break;

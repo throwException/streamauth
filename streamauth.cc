@@ -30,7 +30,7 @@ bool get_hex_or_env(char const* text, uint8_t* buffer, size_t length)
 
 int main (int argc, char *argv[])
 {
-	if (argc < 3) {
+	if (argc < 2) {
 		usage();
 		return -1;
 	}
@@ -39,20 +39,14 @@ int main (int argc, char *argv[])
 	memset(key, 0, sizeof(key));
 	get_hex_or_env(argv[2], key, sizeof(key));
 
-	uint8_t iv[MAC_SIZE];
-	memset(iv, 0, sizeof(iv));
-	if (argc >= 4) {
-		get_hex_or_env(argv[3], iv, sizeof(iv));
-	}
-
 	if (strcmp(argv[1], "add") == 0) {
 		Add* add = new Add();
-		int result = add->run(key, iv);
+		int result = add->run(key);
 		delete add;
 		return result;
 	} else if (strcmp(argv[1], "verify") == 0) {
 		Verify* verify = new Verify();
-		int result = verify->run(key, iv);
+		int result = verify->run(key);
 		delete verify;
 		return result;
 	} else {

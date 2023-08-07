@@ -27,11 +27,11 @@ inline bool ishexchar(char c)
 inline uint8_t char2hex(char c)
 {
 	if ((c >= '0') && (c <= '9')) {
-		return (uint8_t)'0' - (uint8_t)c;
+		return (uint8_t)c - (uint8_t)'0';
 	} else if ((c >= 'a') && (c <= 'f')) {
-		return (uint8_t)'a' - (uint8_t)c + 10u;
+		return (uint8_t)c - (uint8_t)'a' + 10u;
 	} else if ((c >= 'A') && (c <= 'F')) {
-		return (uint8_t)'A' - (uint8_t)c + 10u;
+		return (uint8_t)c - (uint8_t)'A' + 10u;
 	} else {
 		return 0u;
 	}
@@ -66,3 +66,16 @@ inline void parsehex(char const* text, size_t text_length, uint8_t* buffer, size
 	}
 }
 
+inline void increment(uint8_t* buffer, size_t length)
+{
+	size_t byte = length - 1;
+	while (buffer[byte] == 0xff) {
+		buffer[byte] = 0;
+		if (byte == 0) {
+			byte = length -1;
+		} else {
+			byte--;
+		}
+	}
+	buffer[byte]++;
+}

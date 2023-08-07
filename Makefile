@@ -2,21 +2,21 @@
 TARGET  = streamauth
 
 # other source files and the associated object files (this can be blank)
-SRC_CC  = add.cc verify.cc
-SRC_C   = sha2.c hmac_sha2.c 
+SRC_CC  = add.cc verify.cc key.cc
+SRC_C   = 
 OBJ     = $(SRC_CC:.cc=.o) $(SRC_C:.c=.o)
 
 # special include directories
 INCLUDE = -I.
 
 # special libraries (none for now)
-LIB     =
+LIB     = -lcrypto
 
 # select the compiler and flags
 CCC      = g++
-CCFLAGS  =
+CCFLAGS  = 
 CC       = gcc
-CFLAGS  =
+CFLAGS   = 
 
 .SUFFIXES: .cc .c
 
